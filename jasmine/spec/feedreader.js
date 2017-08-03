@@ -22,21 +22,34 @@ $(function() {
          * page?
          */
         it('are defined', function() {
-            expect(allFeeds).toBeDefined();
-            expect(allFeeds.length).not.toBe(0);
+            checkDefinedNotEmpty(allFeeds);
+        });
+
+        //Check for each feed´s URL to be defined and not empty 
+        it('URLs exist', function() {
+            allFeeds.forEach(function(feed){
+                checkDefinedNotEmpty(feed.url);
+            });
+        });
+
+        //Check for each feed´s name to be defined and not empty 
+        it('Names exist', function() {
+            allFeeds.forEach(function(feed){
+               checkDefinedNotEmpty(feed.name);
+            });
         });
 
 
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a URL defined
-         * and that the URL is not empty.
-         */
+        //General funcition
+        function checkDefinedNotEmpty(object) {
+            expect(object).toBeDefined();
+            expect(object.length).not.toBe(0);
+        }
+        
+    });
 
-
-        /* TODO: Write a test that loops through each feed
-         * in the allFeeds object and ensures it has a name defined
-         * and that the name is not empty.
-         */
+    describe('The menu', function(){
+        
     });
 
 
