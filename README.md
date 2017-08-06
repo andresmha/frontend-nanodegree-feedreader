@@ -10,7 +10,7 @@ You can run it by opening the index.html file on the project folder or setting u
 
 When you open the main page, the application will automatically start and  the tests will also start to run. The test results will display at the bottom of the page after all the page components are loaded.
 
-This page was tests are:
+This page tests are:
 * RSS feeds defined
 * RSS Urls are defined and not empty
 * RSS Names are defined and not empty
