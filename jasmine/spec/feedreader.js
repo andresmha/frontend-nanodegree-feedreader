@@ -1,3 +1,4 @@
+
 /* feedreader.js
  *
  * This is the spec file that Jasmine will read and contains
@@ -49,71 +50,66 @@ $(function() {
     });
 
     describe('The menu', function(){
-        var bodyElement = $('body');
-
+        
         
         //Menu hidden by default
-        it('Menu Hidden by Default', function(){
-            checkMenuHidden(); 
+        it('is hidden by Default', function(){
+            checkMenuHidden(true); 
         });
 
         //Check if menu changes status on click
-        it('Menu changes visibility', function(){
+        it('changes visibility', function(){
             var menuIcon = $('.menu-icon-link');
             
             //first click shows
             menuIcon.click();
-            expect(bodyElement.attr('class')).toEqual('');
+            checkMenuHidden(false);
 
             //second click hides
             menuIcon.click();
-            checkMenuHidden();
+            checkMenuHidden(true);
 
         });
 
         //Generic checking function for hidden menu
-        function checkMenuHidden(){
-            expect(bodyElement.attr('class')).toEqual('menu-hidden');
+        function checkMenuHidden(isHidden){
+            var bodyElement = $('body');
+            expect(bodyElement.hasClass('menu-hidden')).toBe(isHidden);
         }
+
     });
 
     describe('Initial Entries', function(){
 
         //Call function with callback for asynchronous function testing
-        beforeEach(function(done){
-            loadFeed(0, function(){
-                done();
-            });
-        });
+        beforeEach(function(done){ loadFeed(0, done); });
 
         //Load at least 1 entry
         it('load at least 1 entry in feed', function(done){
             var feedElement = $('.feed');
-
             expect(feedElement.find('.entry').length).toBeGreaterThan(0);
-
             done();
         });
 
     });
 
     describe('New Feed Selection', function(){
-        //Get feed value before loading entries
-        var previousFeed = $('.feed').text();
-    
+        var previousFeed, modifiedFeed;
+
         //Call function with callback for asynchronous function testing
-        beforeEach(function(done){
+        beforeAll(function(done){
             loadFeed(0, function(){
-                done();
+                previousFeed = $('.feed').text();
+                loadFeed(1, function(){
+                    modifiedFeed = $('.feed').text();
+                    done();
+                });
             });
         });
 
         //loaded content different from empty content
         it('check feed content', function(done){
-            var modifiedFeed = $('.feed').text();
-
-            expect(modifiedFeed).not.toBe(previousFeed);
-
+            expect(previousFeed).not.toEqual(modifiedFeed);
             done();
         });
     });
